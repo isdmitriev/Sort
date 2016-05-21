@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        window.onload = function ()
+        {
+     
+           var isadd = false;
+
+            function Mashelper() {
+                this.mas = new Array();
+
+
+                this.len =this.mas.length - 1;
+                this.i = 0;
+                this.j = 0;
+               
+               
+                this.myf = function (k)
+                {
+                    this.createtable(this.i, this.i + 1);
+                    
+                    if (this.mas[k] > this.mas[k + 1])
+                    {
+
+                        
+                        var c = this.mas[k];
+                        this.mas[k] = this.mas[k + 1];
+                        this.mas[k + 1] = c;
+                        this.createtable();
+                        document.getElementById("table").rows[0].cells[k].style.background = "Aqua";
+                        document.getElementById("table").rows[0].cells[k+1].style.background = "Aqua";
+                        
+                    }
+
+                  
+                   this.i++;
+                };
+
+                 this.f = function () {
+                    if (this.i == this.mas.length-1 && (this.j + 1 == this.len)) {
+
+                        alert("массив отсортирован");
+
+                    }
+
+                    else if (this.i == this.mas.length - 1 && (this.j + 1 < this.len))
+                    {
+                        this.i = 0;
+                        this.j++;
+                        this.myf(i);
+
+                    }
+                    else
+                    {
+
+                        this.myf(this.i);
+                       
+                     }
+
+                };
+
+                this.reset = function ()
+
+                {
+                    
+                    
+                    var tab = document.getElementById("table");
+                    if (tab != null)
+
+                    {
+                        if (tab.rows.length == 1)
+                        {
+                            tab.deleteRow(0);
+                        }
+                        this.i = 0;
+                        this.j = 0;
+                        this.mas.length = 0;
+                        this.len = -1;
+                    }
+                    
+                };
+
+                this.createtable = function (a,b) {
+
+                var tab=document.getElementById("table");
+                    if (tab == null)
+                    {
+                        var table = document.createElement("table");
+
+                        table.setAttribute("border", "1px");
+                        table.setAttribute("id", "table");
+                        var tr = document.createElement("tr");
+                        for (i = 0; i < this.mas.length; i++)
+                        {
+                            var td = document.createElement("td");
+                            td.innerText = this.mas[i];
+                            td.setAttribute("width","30px")
+                            if (i == a || i == b)
+                            {
+                                td.style.background = "red";
+                            }
+                            tr.appendChild(td);
+                        }
+                        table.appendChild(tr);
+
+                        var div = document.getElementById("result");
+                        div.appendChild(table);
+                    }
+                    else
+                    {
+                       if (this.mas.length > 0)
+                        {
+                            var table = document.getElementById("table");
+                           
+                            if (table.rows.length == 1)
+                            {
+                                
+                               table.deleteRow(0);
+                            }
+                 
+
+                            var tr = document.createElement("tr");
+                            for (i = 0; i < this.mas.length; i++) {
+                                var td = document.createElement("td");
+
+                                if (i == a || i == b) {
+                                    td.style.background = "red";
+                                }
+                                td.setAttribute("width", "30px");
+                                td.innerText = this.mas[i];
+                                tr.appendChild(td);
+                            }
+                            table.appendChild(tr);
+
+                        }
+                     }
+                };
+            };
+           
+           var help = new Mashelper();
+         
+             function myfun()
+            {
+                if (form1.elements[0].value > 0 && form1.elements[0].value < 20)
+                {
+                    help.mas.push(form1.elements[0].value);
+                }
+                else
+                {
+                    alert("введите целое число");
+                }
+                
+              }
+            
+            function f2()
+            {
+                
+                
+                
+                
+                help.f();
+            }
+
+            function fun()
+            {
+                if (isadd == false)
+                {
+                    help.len = help.mas.length - 1;
+
+
+                    help.createtable();
+                    isadd = true;
+                }
+            }
+
+            function reset()
+            {
+                isadd = false;
+                help.reset();
+            }
+
+            document.getElementById("il").onclick = f2;
+            document.getElementById("ily").onclick = myfun;
+            document.getElementById("fun").onclick = fun;
+            document.getElementById("reset").onclick = reset;
+           
+          }
+        
+        
+    </script>
+</head>
+<body>
+ <fieldset>
+      <legend>
+
+      </legend>
+    <form name="form1">
+        <table>
+            <tr>
+                <td>
+                    <input type="text"  />
+                     </td>
+                
+                <td>
+                    <input type="button" id="ily" value="добавить елемент" />
+                </td>
+                <td>
+                    <input type="button" id="fun" value="массив" /> 
+                </td>
+                <td>
+                    <input type="button" value="сброс" id="reset" />
+                </td>
+                
+            </tr>
+        </table>
+    </form>
+
+      <button id="il">
+          шаг
+      </button> 
+      <div id="result">
+
+      </div>
+  </fieldset>
+</body>
+</html>
